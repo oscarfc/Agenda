@@ -6,6 +6,7 @@
 package com.mycompany.agenda;
 
 import java.time.LocalDateTime;
+import java.util.Optional;
 
 /**
  *
@@ -18,11 +19,22 @@ public class GestioneAgenda {
     public static void main(String[] args) {
         GestioneAgenda gAgenda = new GestioneAgenda();
         gAgenda.addAppuntamento();
+        gAgenda.findAppuntamento();
     }
 
     private void addAppuntamento() {
         agenda.add(new Appuntamento(LocalDateTime.now(), "qwerty", "Mario", "asdfg"));
         agenda.add(new Appuntamento(LocalDateTime.now(), "qwerty", "Giuseppe", "asdfg"));
         agenda.add(new Appuntamento(LocalDateTime.now(), "qwerty", "Aldo", "asdfg"));
+    }
+
+    private void findAppuntamento() {
+        Optional<Appuntamento> finded = agenda.find(2);
+        if(finded.isEmpty()) {
+            System.out.println("com.mycompany.agenda.GestioneAgenda.findAppuntamento()" + " APPUNTAMENTO NON TROVATO");
+        }
+        else {
+            
+        }
     }
 }

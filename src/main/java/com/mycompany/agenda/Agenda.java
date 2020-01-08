@@ -7,6 +7,7 @@ package com.mycompany.agenda;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
 /**
  *
@@ -33,15 +34,15 @@ public class Agenda {
      * @param id
      * @return Appuntamento
      */
-    public Appuntamento find(int id) {
-        Appuntamento ap = null;
+    public Optional<Appuntamento> find(int id) {
+        Optional<Appuntamento> result = Optional.empty();
         for (Appuntamento a : appuntamenti) {
             if (a.getId() == id) {
-                ap = a;
+                result =  Optional.of(a);
                 break;
             }
         }
-        return ap;
+        return result;
     }
 
     /**
@@ -66,8 +67,8 @@ public class Agenda {
      * @param a
      */
     public void update(int id, Appuntamento a) {
-        appuntamenti.remove(id);
-        appuntamenti.add(id, a);
+        delete(id);
+        add(a);
     }
 
     /**
@@ -75,7 +76,13 @@ public class Agenda {
      * @param id
      */
     public void delete(int id) {
-        appuntamenti.remove(id);
+        Optional<Appuntamento> result = find(id);
+        if (result.isPresent()) {
+            appuntamenti.remove(result.get());
+        }
+        else {
+            throw new IllegalArgumentException("id non trovato");
+        }
     }
 
     public void stampa() {
